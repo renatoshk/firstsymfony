@@ -1,3 +1,4 @@
+//funksion per clik te zemres ne nje post te caktuar
 $(document).ready(function (){
    $('.js-like-article').on('click', function (e){
       e.preventDefault();

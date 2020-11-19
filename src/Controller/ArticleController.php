@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Psr\Log\LoggerInterface;
@@ -35,28 +36,23 @@ class ArticleController extends AbstractController
         if(!$article){
             throw $this->createNotFoundException(sprintf('No article found with this slug "%s" ',$slug));
         }
-
-        $comments = [
-           'Hello Symfony',
-           'Hello World',
-           'Hello Renato',
-        ];
-        $names = [
-            'Name 1',
-            'Name 2',
-        ];
+//        $comments = $commentRepository->findBy(['article'=>$article]);
+//        $comments = $article->getComments();
+//        foreach ($comments as $comment){
+//            dd($comment);
+//        }
         return $this->render('articles/show.html.twig', [
             'article'=>$article,
-            'comments'=>$comments,
-
         ]);
     }
     /**
      * @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
      */
-    public function toggleArticleHeart($slug, LoggerInterface $logger){
+    public function toggleArticleHeart(Article $article, LoggerInterface $logger, EntityManagerInterface $entityManager){
+        $article->incrementHeartCount();
+        $entityManager->flush();
         $logger->info('hearted');
-        return new JsonResponse(['hearts'=>rand(5,100)]);
+        return new JsonResponse(['hearts'=>$article->getHeartCount()]);
     }
 
 }
