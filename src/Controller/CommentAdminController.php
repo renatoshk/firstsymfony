@@ -15,9 +15,9 @@ class CommentAdminController extends AbstractController
      */
     public function index(CommentRepository $repository, Request $request, PaginatorInterface $paginator)
     {
-        $search = $request->query->get('search');
-       $queryBuilder = $repository->getWithSearchQueryBuilder($search);
-        $pagination = $paginator->paginate(
+            $search = $request->query->get('search');
+            $queryBuilder = $repository->getWithSearchQueryBuilder($search);
+            $pagination = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
