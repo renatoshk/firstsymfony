@@ -7,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ * @Table(name="article", indexes={@ORM\Index(name="fk_author_idx", columns={"author_id"})})
+ * @ORM\Entity(repositoryClass=ArticleRepository::class )
  */
 class Article
 {
@@ -23,6 +27,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -43,7 +48,12 @@ class Article
     private $publishedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * })
      */
     private $author;
 
@@ -119,13 +129,16 @@ class Article
 
         return $this;
     }
-
-    public function getAuthor(): ?string
+    public function isPublished():bool
+    {
+        return $this->publishedAt !== null;
+    }
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 
@@ -201,4 +214,11 @@ class Article
 
         return $this;
     }
+//    /**
+//     * @Assert\Callback
+//     */
+//    public function validate(ExecutionContextInterface $context, $payload)
+//    {
+//
+//    }
 }
