@@ -58,6 +58,9 @@
                     <li class="nav-item">
                         <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
+                    <li class="nav-item">
+                        <a style="color: #fff;" class="nav-link" href="{{ path('register') }}">Register</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -67,7 +70,20 @@
                 {{ message }}
             </div>
         {% endfor %}
-        {% block body %}{% endblock %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% block body %}
+            {# Body here #}
+        {% endblock %}
 
         <footer class="footer">
             <div class="container text-center">
