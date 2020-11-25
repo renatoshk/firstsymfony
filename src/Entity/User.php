@@ -55,6 +55,11 @@ class User implements UserInterface
      */
     private $twitteUsername;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $agreedTermsAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -168,5 +173,16 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getFirstName();
+    }
+
+    public function getAgreedTermsAt(): ?\DateTimeInterface
+    {
+        return $this->agreedTermsAt;
+    }
+
+    public function agreeTerms(): self
+    {
+        $this->agreedTermsAt = new \DateTime();
+        return $this;
     }
 }

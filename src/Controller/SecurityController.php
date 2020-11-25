@@ -53,6 +53,9 @@ class SecurityController extends AbstractController
                 $user,
                 $form['plainPassword']->getData()
             ));
+            if (true === $form['agreedTerms']->getData()){
+                $user->agreeTerms();
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
