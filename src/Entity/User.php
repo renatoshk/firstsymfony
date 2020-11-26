@@ -172,7 +172,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->getFirstName();
+        return $this->getEmail();
     }
 
     public function getAgreedTermsAt(): ?\DateTimeInterface
