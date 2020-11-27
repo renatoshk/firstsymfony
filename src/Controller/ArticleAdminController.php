@@ -26,8 +26,13 @@ class ArticleAdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             /** @var Article $article */
+           $files =  $request->files->get('article_form');
+           foreach ($files as $file){
+               $originalName = $file->getClientOriginalName();
+           }
             $article = $form->getData();
             $article->setAuthor($this->getUser());
+            $article->setImageFilename($originalName);
             $entityManager->persist($article);
             $entityManager->flush();
             $this->addFlash('success','Article Created!');
@@ -44,12 +49,20 @@ class ArticleAdminController extends AbstractController
     public function edit(Article $article, Request $request,EntityManagerInterface $entityManager){
         $form = $this->createForm(ArticleFormType::class, $article, [
             'include_published_at' => true,
+
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             /** @var Article $article */
             $article = $form->getData();
             $article->setAuthor($this->getUser());
+            $files =  $request->files->get('article_form');
+            if(NULL !== $files['imageFilename']){
+                foreach ($files as $file){
+                    $originalName = $file->getClientOriginalName();
+                }
+                $article->setImageFilename($originalName);
+            }
             $entityManager->persist($article);
             $entityManager->flush();
             $this->addFlash('success','Article Updated!');
@@ -87,4 +100,5 @@ class ArticleAdminController extends AbstractController
            'articles'=>$articles
         ]);
     }
+
 }
