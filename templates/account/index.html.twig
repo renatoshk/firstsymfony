@@ -16,7 +16,7 @@
                     </div>
                     <div class="col-md-10 no-pad">
                         <div class="user-pad">
-                            <h3>Welcome back, {{ app.user.firstName }}</h3>
+                            <h3>{% trans %}Welcome back,{% endtrans %} {{ app.user.firstName }}</h3>
                             {% if app.user.twitteUsername %}
                                 <h4 class="white"><i class="fa fa-twitter"> {{ app.user.twitteUsername }}</i></h4>
                             {% endif %}

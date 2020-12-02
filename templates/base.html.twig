@@ -10,6 +10,7 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
             <link rel="stylesheet" href="{{ asset('test/css/styles.css') }}">
             <link rel="stylesheet" href="{{ asset('test/css/font-awesome.css') }}">
+
         {% endblock %}
     </head>
 
@@ -40,6 +41,20 @@
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
                 </form>
+
+                <div class="ml-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Select Languange
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path('change_language', {'lang': 'al'}) }}">Al</a>
+                            <a class="dropdown-item "  href="{{ path('change_language', {'lang': 'en'}) }}"><span class="flag flag-us""></span></i></a>
+                        </div>
+                    </div>
+{#                    <a href="{{ path('change_language', {'lang': 'al'}) }}"><button class="btn btn-info my-2 my-sm-0 ">Al</button></a>#}
+{#                    <a href="{{ path('change_language', {'lang': 'en'}) }}"><button class="btn btn-danger my-2 my-sm-0">En</button></a>#}
+                </div>
                 <ul class="navbar-nav ml-auto">
                     {% if is_granted('ROLE_USER') %}
                     <li class="nav-item dropdown" style="margin-right: 75px;">
@@ -47,11 +62,11 @@
                             <img class="nav-profile-img rounded-circle" src="{{ app.user.avatarUrl(100) }}">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{{ path('app_account') }}">Profile</a>
+                            <a class="dropdown-item" href="{{ path('app_account') }}">{% trans %}Profile{% endtrans %}</a>
                             {% if is_granted('ROLE_ADMIN') %}
-                               <a class="dropdown-item" href="{{ path('article_admin') }}">Create Post</a>
+                               <a class="dropdown-item" href="{{ path('article_admin') }}">{% trans %}Create Post{% endtrans %}</a>
                             {% endif %}
-                            <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
                         </div>
                     </li>
                     {% else %}

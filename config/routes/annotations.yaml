@@ -2,8 +2,8 @@ controllers:
     resource: ../../src/Controller/
     type: annotation
     prefix:
-        en: ''
-        pl: ''
+        en: '/en'
+        al: '/al'
 
 kernel:
     resource: ../../src/Kernel.php
