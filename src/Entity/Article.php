@@ -139,10 +139,12 @@ class Article
 
         return $this;
     }
-    public function isPublished():bool
+
+    public function isPublished(): bool
     {
         return $this->publishedAt !== null;
     }
+
     public function getAuthor(): ?User
     {
         return $this->author;
@@ -174,15 +176,20 @@ class Article
 
     public function setImageFilename(?string $imageFilename): self
     {
-        $this->imageFilename = $imageFilename;
-
+        if (!is_null($imageFilename)) {
+            $this->imageFilename = $imageFilename;
+        }
         return $this;
     }
+
     //funksion per te marre image path te postimit
-    public function getImagePath(){
-        return 'test/images/'.$this->getImageFilename();
+    public function getImagePath()
+    {
+        return 'test/images/' . $this->getImageFilename();
     }
-    public function incrementHeartCount():self{
+
+    public function incrementHeartCount(): self
+    {
         $this->heartCount = $this->heartCount + 1;
         return $this;
     }
@@ -194,6 +201,7 @@ class Article
     {
         return $this->comments;
     }
+
     /**
      * @return Collection|Comment[]
      */
@@ -203,6 +211,7 @@ class Article
         $criteria = ArticleRepository::createNonDeletedCriteria();
         return $this->comments->matching($criteria);
     }
+
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -232,27 +241,27 @@ class Article
 //
 //    }
 
-public function getLocation(): ?string
-{
-    return $this->location;
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getSpecificLocationName(): ?string
+    {
+        return $this->specificLocationName;
+    }
+
+    public function setSpecificLocationName(?string $specificLocationName): self
+    {
+        $this->specificLocationName = $specificLocationName;
+        return $this;
+    }
 }
 
-public function setLocation(?string $location): self
-{
-    $this->location = $location;
-
-    return $this;
-}
-
-public function getSpecificLocationName(): ?string
-{
-    return $this->specificLocationName;
-}
-
-public function setSpecificLocationName(?string $specificLocationName): self
-{
-    $this->specificLocationName = $specificLocationName;
-
-    return $this;
-}
-}
